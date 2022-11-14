@@ -3,6 +3,7 @@ package com.example.contacts;
 import androidx.annotation.CallSuper;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -21,19 +22,21 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends DBActivity implements Validation{
-    protected EditText editName, editTel, editEmail;
+    protected EditText editName, editPhone, editTypeOfDoctor;
     protected Button btnInsert;
+    protected Button btnCovidInfo;
     protected ListView listView;
+    protected NewsActivity newsActivity;
 
     protected void FillListView() throws Exception{
         final ArrayList<String> listResults
                 = new ArrayList<>();
         SelectSQL(
-                "SELECT * FROM KONTAKTI " +
+                "SELECT * FROM DOCTORS " +
                         "ORDER BY Name ",
                 null,
-                (ID, Name, Tel, Email)->
-                        listResults.add(ID+"\t"+Name+"\t"+Email+"\t"+Tel+"\n")
+                (ID, Name, Phone, TypeOfDoctor)->
+                        listResults.add(ID+"\t"+Name+"\t"+TypeOfDoctor+"\t"+Phone+"\n")
 
         );
         listView.clearChoices();
@@ -47,6 +50,9 @@ public class MainActivity extends DBActivity implements Validation{
         listView.setAdapter(arrayAdapter);
 
     }
+
+
+
     @Override
     @CallSuper
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -68,13 +74,21 @@ public class MainActivity extends DBActivity implements Validation{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editName=findViewById(R.id.editName);
-        editTel=findViewById(R.id.editTel);
-        editEmail=findViewById(R.id.editEmail);
+        editPhone=findViewById(R.id.editPhone);
+        editTypeOfDoctor=findViewById(R.id.editTypeOfDoctor);
         btnInsert=findViewById(R.id.btnInsert);
         listView=findViewById(R.id.listView);
+        btnCovidInfo=(Button) findViewById(R.id.covidInformation);
+        btnCovidInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, NewsActivity.class);
+                startActivity(intent);
+            }
+        });
         Validation.Validate(editName,
-                editTel,
-                editEmail,
+                editPhone,
+                editTypeOfDoctor,
                 () -> btnInsert.setEnabled(true),
                 () -> btnInsert.setEnabled(false));
 
@@ -88,8 +102,8 @@ public class MainActivity extends DBActivity implements Validation{
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 Validation.Validate(editName,
-                                    editTel,
-                                    editEmail,
+                                    editPhone,
+                                    editTypeOfDoctor,
                         () -> btnInsert.setEnabled(true),
                         () -> btnInsert.setEnabled(false));
             }
@@ -101,8 +115,8 @@ public class MainActivity extends DBActivity implements Validation{
         };
 
         editName.addTextChangedListener(watcher);
-        editTel.addTextChangedListener(watcher);
-        editEmail.addTextChangedListener(watcher);
+        editPhone.addTextChangedListener(watcher);
+        editTypeOfDoctor.addTextChangedListener(watcher);
 
         try {
             InitDB();
@@ -126,8 +140,8 @@ public class MainActivity extends DBActivity implements Validation{
                 Bundle b= new Bundle();
                 b.putString("ID", elements[0]);
                 b.putString("Name", elements[1]);
-                b.putString("Email", elements[2]);
-                b.putString("Tel", elements[3]);
+                b.putString("TypeOfDoctor", elements[2]);
+                b.putString("Phone", elements[3]);
                 intent.putExtras(b);
                 startActivityForResult(intent, 200, b);
 
@@ -139,12 +153,12 @@ public class MainActivity extends DBActivity implements Validation{
         btnInsert.setOnClickListener(view->{
             try{
                 ExecSQL(
-                        "INSERT INTO KONTAKTI(Name, Tel, Email ) " +
+                        "INSERT INTO DOCTORS(Name, Phone, TypeOfDoctor ) " +
                                 "VALUES(?, ?, ?) ",
                         new Object[]{
                                 editName.getText().toString(),
-                                editTel.getText().toString(),
-                                editEmail.getText().toString()
+                                editPhone.getText().toString(),
+                                editTypeOfDoctor.getText().toString()
                         },
                         ()->Toast.makeText(getApplicationContext(), "INSERT SUCCESS",
                                 Toast.LENGTH_LONG).show()
@@ -160,6 +174,9 @@ public class MainActivity extends DBActivity implements Validation{
 
 
         });
+
+
+
 
 
     }

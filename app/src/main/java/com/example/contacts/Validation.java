@@ -38,20 +38,16 @@ public interface Validation {
     }
 
     static void Validate(EditText editName,
-                         EditText editTel,
-                         EditText editEmail,
+                         EditText editPhone,
+                         EditText editTypeOfDoctor,
                          MatchSuccess success,
                          MatchFail fail
     ){
         if(
                 MatchString(
                         "^((\\((\\+|00)?\\d+\\))|(\\+|00))? ?\\d+([\\/ -]?(\\(\\d+\\)|\\d+))+(\\:\\d+)?$",
-                        editTel.getText().toString()
+                        editPhone.getText().toString()
                 )
-                        &&
-                        MatchString("^[\\w\\.]+@(\\w+\\.)+[a-zA-Z]{2,4}$",
-                                editEmail.getText().toString()
-                        )
 
         ){
             success.MatchSuccess();

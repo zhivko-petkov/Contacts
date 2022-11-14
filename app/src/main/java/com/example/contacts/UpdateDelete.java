@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class UpdateDelete extends DBActivity implements Validation {
 
-    protected EditText editName, editTel, editEmail;
+    protected EditText editName, editPhone, editTypeOfDoctor;
     protected Button btnUpdate, btnDelete;
     protected String ID;
 
@@ -52,28 +52,28 @@ public class UpdateDelete extends DBActivity implements Validation {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_delete);
         editName=findViewById(R.id.editName);
-        editTel=findViewById(R.id.editTel);
-        editEmail=findViewById(R.id.editEmail);
+        editPhone=findViewById(R.id.editPhone);
+        editTypeOfDoctor=findViewById(R.id.editTypeOfDoctor);
         btnUpdate=findViewById(R.id.btnUpdate);
         btnDelete=findViewById(R.id.btnDelete);
         Bundle b = getIntent().getExtras();
         if(b!=null){
             ID=b.getString("ID");
             editName.setText(b.getString("Name"));
-            editTel.setText(b.getString("Tel"));
-            editEmail.setText(b.getString("Email"));
+            editPhone.setText(b.getString("Phone"));
+            editTypeOfDoctor.setText(b.getString("TypeOfDoctor"));
         }
 
         Validation.Validate(editName,
-                editTel,
-                editEmail,
+                editPhone,
+                editTypeOfDoctor,
                 () -> btnUpdate.setEnabled(true),
                 () -> btnUpdate.setEnabled(false));
 
         btnDelete.setOnClickListener(view->{
             try{
                 ExecSQL(
-                        "DELETE FROM KONTAKTI " +
+                        "DELETE FROM DOCTORS " +
                                 "WHERE ID = ?",
                         new Object[]{ID},
                         ()->Toast.makeText(getApplicationContext(),
@@ -95,15 +95,15 @@ public class UpdateDelete extends DBActivity implements Validation {
         btnUpdate.setOnClickListener(view->{
             try{
                 ExecSQL(
-                        "UPDATE KONTAKTI SET " +
+                        "UPDATE DOCTORS SET " +
                                 "Name = ?, " +
-                                "Tel = ?, " +
-                                "Email = ? " +
+                                "Phone = ?, " +
+                                "TypeOfDoctor = ? " +
                                 "WHERE ID = ? ",
                         new Object[]{
                                 editName.getText().toString(),
-                                editTel.getText().toString(),
-                                editEmail.getText().toString(),
+                                editPhone.getText().toString(),
+                                editTypeOfDoctor.getText().toString(),
                                 ID
                         },
                         ()->Toast.makeText(getApplicationContext(),

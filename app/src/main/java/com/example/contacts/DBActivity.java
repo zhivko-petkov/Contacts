@@ -12,12 +12,12 @@ public abstract class DBActivity extends AppCompatActivity {
             throws Exception {
         SQLiteDatabase db;
         db = SQLiteDatabase.openOrCreateDatabase(
-                getFilesDir().getPath() + "/kontakti.db",
+                getFilesDir().getPath() + "/doctors.db",
                 null
         );
-        Toast.makeText(getApplicationContext(), getFilesDir().getPath() + "/kontakti.db",
+        Toast.makeText(getApplicationContext(), getFilesDir().getPath() + "/doctors.db",
                 Toast.LENGTH_LONG).show();
-        Log.d("DIRLOCATION", getFilesDir().getPath() + "/kontakti.db");
+        Log.d("DIRLOCATION", getFilesDir().getPath() + "/doctors.db");
         if (args == null) {
             db.execSQL(SQL);
         } else {
@@ -30,13 +30,12 @@ public abstract class DBActivity extends AppCompatActivity {
 
     protected void InitDB() throws Exception {
         ExecSQL(
-                "CREATE TABLE if not exists KONTAKTI( " +
+                "CREATE TABLE if not exists DOCTORS( " +
                         "ID integer PRIMARY KEY AUTOINCREMENT, " +
                         "Name text not null, " +
-                        "Tel text not null, " +
-                        "Email text not null, " +
-                        "unique(Email), " +
-                        "unique(Tel, Name) " +
+                        "Phone text not null, " +
+                        "TypeOfDoctor text not null, " +
+                        "unique(Phone, Name) " +
                         "); ",
                 null,
                 () -> Toast.makeText(getApplicationContext(),
@@ -54,12 +53,12 @@ public abstract class DBActivity extends AppCompatActivity {
     {
         SQLiteDatabase db;
         db = SQLiteDatabase.openOrCreateDatabase(
-                getFilesDir().getPath() + "/kontakti.db",
+                getFilesDir().getPath() + "/doctors.db",
                 null
         );
-        Toast.makeText(getApplicationContext(), getFilesDir().getPath() + "/kontakti.db",
+        Toast.makeText(getApplicationContext(), getFilesDir().getPath() + "/doctors.db",
                 Toast.LENGTH_LONG).show();
-        Log.d("DIRLOCATION", getFilesDir().getPath() + "/kontakti.db");
+        Log.d("DIRLOCATION", getFilesDir().getPath() + "/doctors.db");
         Cursor cursor = db.rawQuery(SelectQ, args);
         while (cursor.moveToNext()){
             @SuppressLint("Range")
@@ -67,10 +66,10 @@ public abstract class DBActivity extends AppCompatActivity {
             @SuppressLint("Range")
             String Name= cursor.getString(cursor.getColumnIndex("Name"));
             @SuppressLint("Range")
-            String Tel= cursor.getString(cursor.getColumnIndex("Tel"));
+            String Phone= cursor.getString(cursor.getColumnIndex("Phone"));
             @SuppressLint("Range")
-            String Email= cursor.getString(cursor.getColumnIndex("Email"));
-            success.OnElementSelected(ID, Name, Tel, Email);
+            String TypeOfDoctor= cursor.getString(cursor.getColumnIndex("TypeOfDoctor"));
+            success.OnElementSelected(ID, Name, Phone, TypeOfDoctor);
         }
         db.close();
     }
@@ -80,7 +79,7 @@ public abstract class DBActivity extends AppCompatActivity {
     }
     protected interface OnSelectSuccess{
         public void
-        OnElementSelected(String ID, String Name, String Tel, String Email);
+        OnElementSelected(String ID, String Name, String Phone, String TypeOfDoctor);
 
     }
 

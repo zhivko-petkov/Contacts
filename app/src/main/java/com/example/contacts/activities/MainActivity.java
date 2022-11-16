@@ -1,11 +1,8 @@
-package com.example.contacts;
+package com.example.contacts.activities;
 
 import androidx.annotation.CallSuper;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,9 +16,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.contacts.R;
+import com.example.contacts.Validation;
+
 import java.util.ArrayList;
 
-public class MainActivity extends DBActivity implements Validation{
+public class MainActivity extends DBActivity implements Validation {
     protected EditText editName, editPhone, editTypeOfDoctor;
     protected Button btnInsert;
     protected Button btnCovidInfo;
@@ -136,7 +136,7 @@ public class MainActivity extends DBActivity implements Validation{
                 selected=clickedText.getText().toString();
                 String [] elements = selected.split("\t");
                 elements[3]=elements[3].trim();
-                Intent intent= new Intent(MainActivity.this, UpdateDelete.class);
+                Intent intent= new Intent(MainActivity.this, DoctorsActivity.class);
                 Bundle b= new Bundle();
                 b.putString("ID", elements[0]);
                 b.putString("Name", elements[1]);

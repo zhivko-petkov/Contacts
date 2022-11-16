@@ -1,4 +1,4 @@
-package com.example.contacts;
+package com.example.contacts.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.contacts.R;
 
 import java.nio.charset.StandardCharsets;
 

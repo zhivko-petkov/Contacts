@@ -1,18 +1,19 @@
-package com.example.contacts;
+package com.example.contacts.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.contacts.R;
+import com.example.contacts.Validation;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UpdateDelete extends DBActivity implements Validation {
+public class DoctorsActivity extends DBActivity implements Validation {
 
     protected EditText editName, editPhone, editTypeOfDoctor;
     protected Button btnUpdate, btnDelete;
@@ -44,7 +45,7 @@ public class UpdateDelete extends DBActivity implements Validation {
 
     protected void BackToMain(){
         finishActivity(200);
-        Intent i = new Intent(UpdateDelete.this,
+        Intent i = new Intent(DoctorsActivity.this,
                 MainActivity.class);
         startActivity(i);
     }
@@ -100,7 +101,7 @@ public class UpdateDelete extends DBActivity implements Validation {
             public void onClick(View view) {
                 String selected="";
 
-                Intent intent = new Intent(UpdateDelete.this, SMSActivity.class);
+                Intent intent = new Intent(DoctorsActivity.this, SMSActivity.class);
                 Bundle currentBundle = new Bundle();
                 currentBundle.putString("number", editPhone.getText().toString());
                 intent.putExtras(currentBundle);

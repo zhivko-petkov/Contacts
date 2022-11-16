@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:background="#2196F3"
+        app:srcCompat="@drawable/logo_zclinic" />
 
     <EditText
         android:layout_width="match_parent"
@@ -22,18 +30,28 @@
         android:id="@+id/editTypeOfDoctor"
         android:hint="Type of doctor"
         android:inputType="text"></EditText>
+
     <Button
+        android:id="@+id/btnInsert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnInsert"
-        android:text="INSERT"></Button>
-    <!-- doctors numbers -->
+        android:text="Add doctor"></Button>
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="504dp"
-        android:minHeight="300dp"></ListView>
+        android:layout_height="312dp"
+        android:background="#ECEDED"
+        android:minHeight="300dp" />
+
+    <!-- doctors numbers -->
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="match_parent"
+        android:layout_height="141dp"
+        android:background="#EBECEC"
+        app:srcCompat="@drawable/coviid" />
 
     <Button
         android:id="@+id/covidInformation"

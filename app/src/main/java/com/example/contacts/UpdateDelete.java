@@ -3,8 +3,10 @@ package com.example.contacts;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.regex.Matcher;
@@ -14,6 +16,7 @@ public class UpdateDelete extends DBActivity implements Validation {
 
     protected EditText editName, editPhone, editTypeOfDoctor;
     protected Button btnUpdate, btnDelete;
+    protected Button btnSendMessage;
     protected String ID;
 
 
@@ -56,6 +59,7 @@ public class UpdateDelete extends DBActivity implements Validation {
         editTypeOfDoctor=findViewById(R.id.editTypeOfDoctor);
         btnUpdate=findViewById(R.id.btnUpdate);
         btnDelete=findViewById(R.id.btnDelete);
+        btnSendMessage=findViewById(R.id.btnSendMessage);
         Bundle b = getIntent().getExtras();
         if(b!=null){
             ID=b.getString("ID");
@@ -90,6 +94,18 @@ public class UpdateDelete extends DBActivity implements Validation {
                 BackToMain();
             }
 
+        });
+        btnSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String selected="";
+
+                Intent intent = new Intent(UpdateDelete.this, SMSActivity.class);
+                Bundle currentBundle = new Bundle();
+                currentBundle.putString("number", editPhone.getText().toString());
+                intent.putExtras(currentBundle);
+                startActivity(intent);
+            }
         });
 
         btnUpdate.setOnClickListener(view->{

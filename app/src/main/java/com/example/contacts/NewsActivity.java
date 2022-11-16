@@ -38,7 +38,6 @@ public class NewsActivity extends AppCompatActivity {
     String myUrl = "http://localhost:8080/api/covidInBg";
     TextView resultsTextView;
     ProgressDialog progressDialog;
-    //Button displayData;
     private RecyclerView recyclerView;
 
     @Override
@@ -64,8 +63,20 @@ public class NewsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        System.out.println(response);
-                        resultsTextView.setText("Response is: " + response);
+                        JSONObject jsonObject = null;
+                        String statistic = "";
+                        try {
+                            jsonObject = new JSONObject(response);
+                            String lastDayCases = jsonObject.getString("lastDayCases");
+                            String allCases = jsonObject.getString("allCases");
+                            String date = jsonObject.getString("date");
+                            statistic = "Last Day Cases:" + lastDayCases +
+                                    "\n"+"Total Cases: "+ allCases + "\n" + date;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        resultsTextView.setText(statistic);
                     }
                 }, new Response.ErrorListener() {
             @Override
